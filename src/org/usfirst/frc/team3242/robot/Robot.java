@@ -20,7 +20,9 @@ public class Robot extends IterativeRobot {
 	final String customAuto = "My Auto";
 	String autoSelected;
 	SendableChooser<String> chooser = new SendableChooser<>();
-	Talon motor;
+	Talon vacuumMotor;
+	Talon elevatorMotor;
+	Talon shooterMotor;
 	
     Joystick controller;
     CANTalon motorLeft;
@@ -48,7 +50,9 @@ public class Robot extends IterativeRobot {
 		motorLeft = new CANTalon(2);
 		motorRight = new CANTalon(1);
 		driver = new RobotDrive(motorLeft, motorRight); // remember to pass objects for CAN, not port numbers
-		motor = new Talon(0);
+		vacuumMotor = new Talon(0);
+		elevatorMotor = new Talon(1);
+		shooterMotor = new Talon(2);
 	}
 
 	/**
@@ -91,13 +95,27 @@ public class Robot extends IterativeRobot {
 	 */
 	@Override
 	public void teleopPeriodic() {
-		yAxisLeft = controller.getRawAxis(1);
-		yAxisRight = controller.getRawAxis(5);
-		leftTrigger = controller.getRawAxis(2);
-		rightTrigger = controller.getRawAxis(3);
-		driver.tankDrive(yAxisLeft, yAxisRight);
-		motor.set(rightTrigger + -leftTrigger );
+		double yAxisLeft = controller.getRawAxis(1);//LY
+		double yAxisRight = controller.getRawAxis(5);//RY
 		
+		double leftTrigger = controller.getRawAxis(2);//L2
+		double rightTrigger = controller.getRawAxis(3);//R2
+		double triggers = rightTrigger + -leftTrigger;
+		
+		if(controller.getRawButton(5)){//R1
+			shooterMotor.set(-1);//clockwise
+		}else{
+			shooterMotor.set(0);
+		}
+		
+		if(controller.getRawButton(4)){//L1
+			elevatorMotor.set(-1);//clockwise
+		}else{
+			elevatorMotor.set(0);
+		}
+		
+		driver.tankDrive(yAxisLeft, yAxisRight);
+		vacuumMotor.set(triggers);
 	}
 
 	/**
