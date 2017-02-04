@@ -51,8 +51,8 @@ public class Robot extends IterativeRobot {
 		motorRight = new CANTalon(1);
 		driver = new RobotDrive(motorLeft, motorRight); // remember to pass objects for CAN, not port numbers
 		vacuumMotor = new Talon(0);
-		elevatorMotor = new Talon(1);
-		shooterMotor = new Talon(2);
+		elevatorMotor = new Talon(2);
+		shooterMotor = new Talon(1);
 	}
 
 	/**
@@ -102,14 +102,14 @@ public class Robot extends IterativeRobot {
 		double rightTrigger = controller.getRawAxis(3);//R2
 		double triggers = rightTrigger + -leftTrigger;
 		
-		if(controller.getRawButton(5)){//R1
-			shooterMotor.set(-1);//clockwise
+		if(controller.getRawButton(5)){//L1
+			shooterMotor.set(-1.0);//clockwise
 		}else{
 			shooterMotor.set(0);
 		}
 		
-		if(controller.getRawButton(4)){//L1
-			elevatorMotor.set(-1);//clockwise
+		if(controller.getRawButton(6)){//R1
+			elevatorMotor.set(0.70);//counterclockwise
 		}else{
 			elevatorMotor.set(0);
 		}
