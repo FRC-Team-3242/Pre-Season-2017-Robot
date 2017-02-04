@@ -25,12 +25,6 @@ public class Robot extends IterativeRobot {
 	Talon shooterMotor;
 	
     Joystick controller;
-    CANTalon motorLeft;
-    CANTalon motorRight;
-    double yAxisLeft;
-    double yAxisRight;
-    double rightTrigger;
-    double leftTrigger;
     RobotDrive driver;
     
 
@@ -47,8 +41,8 @@ public class Robot extends IterativeRobot {
 		//driver.setInvertedMotor(kFrontLeft, true);
 		
 		controller = new Joystick(0);
-		motorLeft = new CANTalon(2);
-		motorRight = new CANTalon(1);
+		CANTalon motorLeft = new CANTalon(2);
+		CANTalon motorRight = new CANTalon(1);
 		driver = new RobotDrive(motorLeft, motorRight); // remember to pass objects for CAN, not port numbers
 		vacuumMotor = new Talon(0);
 		elevatorMotor = new Talon(2);
